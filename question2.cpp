@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #define pdd pair<double, double> 
 using namespace std;
+// to find out the intersection point of lines (A,B) and (C,D)
 pdd find(pdd A, pdd B, pdd C, pdd D) 
 { 
     // Line AB represented as a1x + b1y = c1 
@@ -54,6 +55,8 @@ double solve(int g,vector< vector< pair<double,double> > > &b,double si,double s
             ans+=(b[i][1].second-p.second);
             return ans;
         }
+        // after finding the intersection point p, check whether p's y coordinate is less than building size or greater according to which 
+        // current building left part or top part will be included. 
         if(p.second<=b[i][0].second){
             ans+=(b[i][1].second-b[i][0].second);
         }
@@ -87,6 +90,7 @@ bool cmp(vector<pair<double,double>> v1 ,vector<pair<double,double>> v2){
     
     return v1[0].first<v2[0].first;
 }
+//to find the building from where the point is just left 
 int check(vector<vector<pdd>> &b,double si,double sj){
     
     for(int i=0;i<b.size();i++){
@@ -117,14 +121,14 @@ int main (){
     
     double si,sj;
     cin>>si>>sj;
-    // cout<<b[0][0].first<<" "<<b[0][0].second<<" "<<b[0][1].first<<" "<<b[0][1].second<<" "<<
-    // b[0][2].first<<" "<<b[0][2].second<<" "<<b[0][3].first<<" "<<b[0][3].second<<" "<<
-    // si<<" "<<sj<<" ";
-    sort(b.begin(),b.end(),cmp);
+    
+    sort(b.begin(),b.end(),cmp); // to sort the buildings according to x coordinates, can easily replace this function with my own sort function
     int g=check(b,si,sj);
+    // for now I have only solved for g==0 means source point lies on left of all buildings.
     double ans=0;
     if(g<b.size())
         ans+=solve(g,b,si,sj);
+    
     cout<<ans;  
     return 0;
     
